@@ -1,0 +1,40 @@
+CREATE TABLE 
+  view_item_events_1
+AS 
+SELECT 
+  event_id,
+  event_time,
+  user_id,
+  platform,
+  MAX(CASE WHEN parameter_name = 'item_id'
+    THEN parameter_value
+    ELSE NULL 
+    END) AS referrer
+FROM 
+  events 
+WHERE
+  event_name = 'view_item'
+GROUP BY
+  event_id,
+  event_time,
+  user_id,
+  platform
+ORDER BY
+  event_id;
+
+  --  This is the following sectino
+
+  DESCRIBE view_item_events_1;
+  SELECT * FROM view_item_events_1 LIMIT 10;
+  DROP TABLE view_item_events_1;
+
+
+  -- next section
+
+  CREATE TABLE 'view_item_events' (
+  event_id     VARCHAR(32) NOT NULL PRIMARY KEY,
+  event_time   VARCHAR(26) ,
+  user_id      INT(10),
+  platform     VARCHAR(26),
+  
+  )
